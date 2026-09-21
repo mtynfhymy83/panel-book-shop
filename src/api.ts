@@ -62,7 +62,11 @@ async function refreshTokens() {
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json', 'X-Request-Id': requestId() }
-  if (options.body !== undefined) headers['Content-Type'] = 'application/json'
+  const isFormData = options.body instanceof FormData
+  const body: BodyInit | undefined = isFormData
+    ? options.body as FormData
+    : options.body === undefined ? undefined : JSON.stringify(options.body)
+  if (options.body !== undefined && !isFormData) headers['Content-Type'] = 'application/json'
   if (options.auth !== false) {
     const token = sessionStore.getAccessToken()
     if (token) headers.Authorization = `Bearer ${token}`
@@ -71,7 +75,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   const response = await fetch(`${API_URL}${path}`, {
     method: options.method || 'GET',
     headers,
-    body: options.body === undefined ? undefined : JSON.stringify(options.body),
+    body,
   })
   const payload = await parse(response)
 
@@ -95,4 +99,9 @@ export const bestSellersApi = {
   create: (data: BestSellerPayload) => request<BestSeller>('/admin/best-selling-products', { method: 'POST', body: data }),
   update: (id: string, data: BestSellerPayload) => request<BestSeller>(`/admin/best-selling-products/${encodeURIComponent(id)}`, { method: 'PATCH', body: data }),
   remove: (id: string) => request<void>(`/admin/best-selling-products/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  uploadCover: (file: File) => {
+    const body = new FormData()
+    body.append('image', file)
+    return request<{ coverUrl: string }>('/admin/best-selling-products/cover', { method: 'POST', body })
+  },
 }
