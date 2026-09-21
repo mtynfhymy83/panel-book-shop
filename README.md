@@ -32,17 +32,17 @@ npm run build
 برای تست محلی:
 
 ```bash
-docker build -t pardis-book-admin .
+docker build -t panel-admin-shop .
 docker run --rm -p 8080:80 \
   -e API_UPSTREAM=http://host.docker.internal:9502 \
-  pardis-book-admin
+  panel-admin-shop
 ```
 
 سپس پنل در `http://localhost:8080` در دسترس است. مقدار `API_UPSTREAM` فقط origin بک‌اند است (برای مثال `https://api.example.com`) و نباید `/api/v1` در انتهای آن قرار بگیرد؛ خود فرانت درخواست‌ها را با این مسیر ارسال می‌کند.
 
 ### ۱. تنظیم GitHub Actions و Docker Hub
 
-1. در Docker Hub یک repository با نام `pardis-book-admin` بسازید.
+1. در Docker Hub یک repository با نام `panel-admin-shop` بسازید.
 2. در Docker Hub یک Personal Access Token با دسترسی Read/Write بسازید.
 3. در GitHub به `Settings > Secrets and variables > Actions` بروید و این Repository Secretها را اضافه کنید:
    - `DOCKERHUB_USERNAME`: نام کاربری Docker Hub
@@ -60,7 +60,7 @@ Pull Requestها فقط build می‌شوند و هیچ ایمیجی push نمی
 ### ۲. ساخت Application در Dokploy
 
 1. یک Application جدید بسازید و Provider/Source را روی `Docker` قرار دهید.
-2. نام ایمیج را به شکل `DOCKERHUB_USERNAME/pardis-book-admin` و Tag را `latest` وارد کنید.
+2. نام ایمیج را به شکل `DOCKERHUB_USERNAME/panel-admin-shop` و Tag را `latest` وارد کنید.
 3. Container Port را `80` تنظیم کنید.
 4. در بخش Environment این مقدار را اضافه کنید:
 
