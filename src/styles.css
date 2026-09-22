@@ -174,7 +174,7 @@ tbody tr:hover { background: #fcfdfc; }
 .drawer__header .eyebrow { margin-bottom: 3px; }
 .drawer__header h2 { margin: 0; font-size: 20px; }
 .drawer__body { display: grid; padding: 24px 28px 32px; gap: 17px; }
-.cover-preview { display: grid; width: 88px; height: 116px; margin: 0 auto 5px; place-items: center; background: #f0f3f1; border: 1px dashed #cfd9d5; border-radius: 8px; overflow: hidden; }
+.cover-preview { display: grid; width: 90px; height: 125px; margin: 0 auto 5px; padding: 0; place-items: center; background: #f0f3f1; border: 1px dashed #cfd9d5; border-radius: 8px; overflow: hidden; }
 .cover-preview img { width: 100%; height: 100%; object-fit: cover; }
 .cover-preview div { display: grid; justify-items: center; gap: 7px; color: #91a09b; font-size: 9px; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
